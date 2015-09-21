@@ -80,6 +80,9 @@ public class MainActivity extends ActionBarActivity {
 
         spinnerPais.setOnItemSelectedListener(new PaisSelecionado());
 
+        new CarregaSpinnerEstilo().execute();
+        new CarregaSpinnerCor().execute();
+        new CarregaSpinnerPais().execute();
 
         mProgress.setVisibility(View.INVISIBLE);
 
@@ -166,6 +169,7 @@ public class MainActivity extends ActionBarActivity {
 
             CursorList<Estilo> retorno = Query.all(Estilo.class).get();
             ArrayList<String> lista = new ArrayList<String>();
+            lista.add("");
             for(Estilo estilo: retorno.asList()){
                 lista.add(estilo.getNome());
             }
@@ -188,6 +192,7 @@ public class MainActivity extends ActionBarActivity {
 
             CursorList<Cor> retorno = Query.all(Cor.class).get();
             ArrayList<String> lista = new ArrayList<String>();
+            lista.add("");
             for(Cor cor: retorno.asList()){
                 lista.add(cor.getNome());
             }
@@ -210,6 +215,7 @@ public class MainActivity extends ActionBarActivity {
 
             CursorList<Pais> retorno = Query.all(Pais.class).get();
             ArrayList<String> lista = new ArrayList<String>();
+            lista.add("");
             for(Pais pais: retorno.asList()){
                 lista.add(pais.getNome());
             }
