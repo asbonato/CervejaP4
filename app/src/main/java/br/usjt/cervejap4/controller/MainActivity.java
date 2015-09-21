@@ -15,11 +15,17 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import br.usjt.cervejap4.R;
-import br.usjt.cervejap4.data.CategoriasDb;
 import br.usjt.cervejap4.model.Cerveja;
+import br.usjt.cervejap4.model.Cor;
+import br.usjt.cervejap4.model.Estilo;
+import br.usjt.cervejap4.model.Pais;
 import br.usjt.cervejap4.network.CervejaRequester;
+import se.emilsjolander.sprinkles.CursorList;
+import se.emilsjolander.sprinkles.ManyQuery;
+import se.emilsjolander.sprinkles.Query;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -63,15 +69,15 @@ public class MainActivity extends ActionBarActivity {
         mProgress = (ProgressBar) findViewById(R.id.carregando);
 
         spinnerEstilo = (Spinner) findViewById(R.id.dropdown_estilos);
-        new CarregaSpinnerEstilo().execute(CategoriasDb.ESTILO);
+
         spinnerEstilo.setOnItemSelectedListener(new EstiloSelecionado());
 
         spinnerCor = (Spinner) findViewById(R.id.dropdown_cores);
-        new CarregaSpinnerCor().execute(CategoriasDb.COR);
+
         spinnerCor.setOnItemSelectedListener(new CorSelecionada());
 
         spinnerPais = (Spinner) findViewById(R.id.dropdown_paises);
-        new CarregaSpinnerPais().execute(CategoriasDb.PAIS);
+
         spinnerPais.setOnItemSelectedListener(new PaisSelecionado());
 
 
@@ -157,11 +163,13 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected ArrayList<String> doInBackground(String... params) {
-            CategoriasDb db = new CategoriasDb(contexto);
-            ArrayList<String> lista = db.selecionaEstilos();
-            if(lista.size() == 1)
-                db.insereEstilo();
-            lista = db.selecionaEstilos();
+
+            CursorList<Estilo> retorno = Query.all(Estilo.class).get();
+            ArrayList<String> lista = new ArrayList<String>();
+            for(Estilo estilo: retorno.asList()){
+                lista.add(estilo.getNome());
+            }
+
             return lista;
         }
 
@@ -177,11 +185,13 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected ArrayList<String> doInBackground(String... params) {
-            CategoriasDb db = new CategoriasDb(contexto);
-            ArrayList<String> lista = db.selecionaCores();
-            if(lista.size() == 1)
-                db.insereCor();
-            lista = db.selecionaCores();
+
+            CursorList<Cor> retorno = Query.all(Cor.class).get();
+            ArrayList<String> lista = new ArrayList<String>();
+            for(Cor cor: retorno.asList()){
+                lista.add(cor.getNome());
+            }
+
             return lista;
         }
 
@@ -197,11 +207,13 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected ArrayList<String> doInBackground(String... params) {
-            CategoriasDb db = new CategoriasDb(contexto);
-            ArrayList<String> lista = db.selecionaPaises();
-            if(lista.size() == 1)
-                db.inserePais();
-            lista = db.selecionaPaises();
+
+            CursorList<Pais> retorno = Query.all(Pais.class).get();
+            ArrayList<String> lista = new ArrayList<String>();
+            for(Pais pais: retorno.asList()){
+                lista.add(pais.getNome());
+            }
+
             return lista;
         }
 
