@@ -1,10 +1,13 @@
-package br.usjt.cervejap3.controller;
+package br.usjt.cervejap4.controller;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -13,9 +16,10 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import br.usjt.cervejap3.R;
-import br.usjt.cervejap3.model.Cerveja;
-import br.usjt.cervejap3.network.CervejaRequester;
+import br.usjt.cervejap4.R;
+import br.usjt.cervejap4.data.CategoriasDb;
+import br.usjt.cervejap4.model.Cerveja;
+import br.usjt.cervejap4.network.CervejaRequester;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -26,19 +30,28 @@ public class MainActivity extends ActionBarActivity {
     String pais, cor, estilo;
     ArrayList<Cerveja> cervejas;
     final String servidor = "jbossews-cerveja.rhcloud.com";
-    //final String servidor = "10.0.2.2:8080";
+    //final String servidor = "10.0.2.2:8080/arqdesis_json";
     CervejaRequester requester;
     ProgressBar mProgress;
     Intent intent;
-
+    Context contexto;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.contexto = this;
         setupViews();
 
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        spinnerCor.setSelection(0);
+        spinnerEstilo.setSelection(0);
+        spinnerPais.setSelection(0);
     }
 
     private void setupViews() {
@@ -46,13 +59,22 @@ public class MainActivity extends ActionBarActivity {
         cor = "";
         pais = "";
         btnConsultar = (Button) findViewById(R.id.botao_enviar);
-        spinnerEstilo = (Spinner) findViewById(R.id.dropdown_estilos);
-        spinnerEstilo.setOnItemSelectedListener(new EstiloSelecionado());
-        spinnerCor = (Spinner) findViewById(R.id.dropdown_cores);
-        spinnerCor.setOnItemSelectedListener(new CorSelecionada());
-        spinnerPais = (Spinner) findViewById(R.id.dropdown_paises);
-        spinnerPais.setOnItemSelectedListener(new PaisSelecionado());
+
         mProgress = (ProgressBar) findViewById(R.id.carregando);
+
+        spinnerEstilo = (Spinner) findViewById(R.id.dropdown_estilos);
+        new CarregaSpinnerEstilo().execute(CategoriasDb.ESTILO);
+        spinnerEstilo.setOnItemSelectedListener(new EstiloSelecionado());
+
+        spinnerCor = (Spinner) findViewById(R.id.dropdown_cores);
+        new CarregaSpinnerCor().execute(CategoriasDb.COR);
+        spinnerCor.setOnItemSelectedListener(new CorSelecionada());
+
+        spinnerPais = (Spinner) findViewById(R.id.dropdown_paises);
+        new CarregaSpinnerPais().execute(CategoriasDb.PAIS);
+        spinnerPais.setOnItemSelectedListener(new PaisSelecionado());
+
+
         mProgress.setVisibility(View.INVISIBLE);
 
     }
@@ -128,6 +150,66 @@ public class MainActivity extends ActionBarActivity {
         } else {
             Toast toast = Toast.makeText(this, "Rede indisponível!", Toast.LENGTH_LONG);
             toast.show();
+        }
+    }
+
+    private class CarregaSpinnerEstilo extends AsyncTask<String, Void, ArrayList<String>>{
+
+        @Override
+        protected ArrayList<String> doInBackground(String... params) {
+            CategoriasDb db = new CategoriasDb(contexto);
+            ArrayList<String> lista = db.selecionaEstilos();
+            if(lista.size() == 1)
+                db.insereEstilo();
+            lista = db.selecionaEstilos();
+            return lista;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> result){
+            ArrayAdapter<String> estiloAdapter = new ArrayAdapter<String>(contexto,
+                    android.R.layout.simple_spinner_item, result);
+            spinnerEstilo.setAdapter(estiloAdapter);
+        }
+    }
+
+    private class CarregaSpinnerCor extends AsyncTask<String, Void, ArrayList<String>>{
+
+        @Override
+        protected ArrayList<String> doInBackground(String... params) {
+            CategoriasDb db = new CategoriasDb(contexto);
+            ArrayList<String> lista = db.selecionaCores();
+            if(lista.size() == 1)
+                db.insereCor();
+            lista = db.selecionaCores();
+            return lista;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> result){
+            ArrayAdapter<String> corAdapter = new ArrayAdapter<String>(contexto,
+                    android.R.layout.simple_spinner_item, result);
+            spinnerCor.setAdapter(corAdapter);
+        }
+    }
+
+    private class CarregaSpinnerPais extends AsyncTask<String, Void, ArrayList<String>>{
+
+        @Override
+        protected ArrayList<String> doInBackground(String... params) {
+            CategoriasDb db = new CategoriasDb(contexto);
+            ArrayList<String> lista = db.selecionaPaises();
+            if(lista.size() == 1)
+                db.inserePais();
+            lista = db.selecionaPaises();
+            return lista;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> result){
+            ArrayAdapter<String> paisAdapter = new ArrayAdapter<String>(contexto,
+                    android.R.layout.simple_spinner_item, result);
+            spinnerPais.setAdapter(paisAdapter);
         }
     }
 

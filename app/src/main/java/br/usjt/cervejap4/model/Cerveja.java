@@ -1,4 +1,4 @@
-package br.usjt.cervejap3.model;
+package br.usjt.cervejap4.model;
 
 import java.io.Serializable;
 

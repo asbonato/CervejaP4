@@ -1,4 +1,4 @@
-package br.usjt.cervejap3.controller;
+package br.usjt.cervejap4.controller;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,9 +10,9 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import br.usjt.cervejap3.adapter.CervejaAdapter;
-import br.usjt.cervejap3.R;
-import br.usjt.cervejap3.model.Cerveja;
+import br.usjt.cervejap4.adapter.CervejaAdapter;
+import br.usjt.cervejap4.R;
+import br.usjt.cervejap4.model.Cerveja;
 
 public class ListaCervejaActivity extends ActionBarActivity {
     ListView listView;

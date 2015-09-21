@@ -1,11 +1,11 @@
-package br.usjt.cervejap3.util;
+package br.usjt.cervejap4.util;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 
 import java.lang.reflect.Field;
 
-import br.usjt.cervejap3.R;
+import br.usjt.cervejap4.R;
 
 /**
  * Created by asbonato on 9/7/15.

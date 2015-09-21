@@ -1,4 +1,4 @@
-package br.usjt.cervejap3.adapter;
+package br.usjt.cervejap4.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,10 +15,10 @@ import java.text.NumberFormat;
 import java.util.Hashtable;
 import java.util.Locale;
 
-import br.usjt.cervejap3.R;
-import br.usjt.cervejap3.util.Util;
-import br.usjt.cervejap3.util.ViewHolder;
-import br.usjt.cervejap3.model.Cerveja;
+import br.usjt.cervejap4.R;
+import br.usjt.cervejap4.util.Util;
+import br.usjt.cervejap4.util.ViewHolder;
+import br.usjt.cervejap4.model.Cerveja;
 
 /**
  * Created by asbonato on 9/6/15.

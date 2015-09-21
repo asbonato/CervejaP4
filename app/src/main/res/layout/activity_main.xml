@@ -32,7 +32,6 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/estilos"
                 android:id="@+id/dropdown_estilos"
                 android:paddingBottom="8dp"
                 />
@@ -54,7 +53,6 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/cores"
                 android:id="@+id/dropdown_cores"
                 android:paddingBottom="8dp"
                 />
@@ -75,7 +73,6 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/paises"
                 android:id="@+id/dropdown_paises"
                 />
         </LinearLayout>

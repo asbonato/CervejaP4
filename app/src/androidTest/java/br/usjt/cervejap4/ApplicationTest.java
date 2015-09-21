@@ -1,4 +1,4 @@
-package br.usjt.cervejap3;
+package br.usjt.cervejap4;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

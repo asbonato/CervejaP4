@@ -1,10 +1,10 @@
-package br.usjt.cervejap3.adapter;
+package br.usjt.cervejap4.adapter;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.TreeSet;
 
-import br.usjt.cervejap3.model.Cerveja;
+import br.usjt.cervejap4.model.Cerveja;
 
 /**
  * Created by asbonato on 9/7/15.

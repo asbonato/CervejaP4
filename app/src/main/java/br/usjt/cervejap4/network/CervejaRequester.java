@@ -1,4 +1,4 @@
-package br.usjt.cervejap3.network;
+package br.usjt.cervejap4.network;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -21,7 +21,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import br.usjt.cervejap3.model.Cerveja;
+import br.usjt.cervejap4.model.Cerveja;
 
 /**
  * Created by asbonato on 2/6/15.
